@@ -23,27 +23,28 @@ db = client["final"]
 # HOME PAGE
 @app.route("/home")
 def dashboard():
-  collection = db.profiles
-  events = collection.find({})
-  return render_template("index.html", events=events)
+  # collection = db.profiles
+  # events = collection.find({})
+  username = request.cookies.get("username")
+  return render_template("index.html", user=username)
 
 #portfolio
 @app.route("/portfolio", methods=["POST", "GET"])
 def stock_checker():
   collection = db.profiles
   user_portfolios = collection.find_one({"username": request.cookies.get("username")})["portfolios"]
-  
+  username = request.cookies.get("username")
   if request.method == "POST":
     input = request.form["new_stock"]
     ticker = model.ask_ai(input, "stock_input") 
     stock_list = [datatypes.gen_stock(ticker)]
-    updated_list = datatypes.updated_stock_prices(stock_list)
+    # updated_list = datatypes.updated_stock_prices(stock_list)
     new_portfolio = {
       "name" : ticker,
       "creation" : "4-9-2994",
       "private": True,
       "info": "",
-      "stocks": updated_list
+      "stocks": stock_list
     }
     gathered_news = model.get_search(ticker, 5)
     new_portfolio["info"] = model.ask_ai(str(gathered_news), "summ_news")
@@ -51,83 +52,57 @@ def stock_checker():
     user_portfolios.append(new_portfolio)
     collection.update_one({"username": request.cookies.get('username')}, {"$set" : {"portfolios" : user_portfolios}})
 
-    return render_template("portfolio.html", portfolios = user_portfolios)
+    return render_template("portfolio.html", portfolios = user_portfolios, user=username)
 
 
   else:
-    return render_template("portfolio.html", portfolios=user_portfolios)
-
-
-
-
-
-
-
-# def portfolio():
-#   collection = db.profiles
-#   user_portfolios = collection.find_one({"username": request.cookies.get("username")})["portfolios"]
-#   if request.method == "POST":
-#     input = request.form["new_portfolio"]
-#     ticker_list = model.ask_ai(input, "portfolio_input").split(",") #this is list of tickers
-#     stock_list = [datatypes.gen_stock(stock_name) for stock_name in ticker_list]
-#     updated_list = datatypes.updated_stock_prices(stock_list)
-#     new_portfolio = {
-#       "name" : str(ticker_list),
-#       "creation" : "4-9-2994",
-#       "private": True,
-#       "link": "",
-#       "stocks": updated_list
-#     }
-#     user_portfolios.append(new_portfolio)
-#     collection.update_one({"username": request.cookies.get('username')}, {"$set" : {"portfolios" : user_portfolios}})
-
-#     return render_template("portfolio.html", portfolios = user_portfolios)
-
-    
-#   else:
-#     return render_template("portfolio.html", portfolios=user_portfolios)
+    return render_template("portfolio.html", portfolios=user_portfolios, user=username)
 
 #news
 @app.route("/news", methods=["POST", "GET"])
 def news():
+  username = request.cookies.get("username")
   if request.method == "POST":
     query = request.form["news_query"]
     num = request.form["num_articles"]
     out = model.get_search(query, num)
-    return render_template("news.html", output = out)
+    return render_template("news.html", output = out, user=username)
   else:
-    return render_template("news.html")
+    return render_template("news.html", user=username)
 
 
 #currencyConverter
 @app.route("/currencyConverter", methods=["POST", "GET"])
 def currency():
+  username = request.cookies.get("username")
   if request.method == "POST":
     num = int(request.form["num_currencies"])
     out = sorted(datatypes.calculate_forex(datatypes.get_usd_rates(), num), key= lambda pair: pair['final_profit'], reverse = True)
-    return render_template("currencyConverter.html", output = out, lim=num)
+    return render_template("currencyConverter.html", output = out, lim=num, user=username)
   else:
-    return render_template("currencyConverter.html", output = [], lim=0)
+    return render_template("currencyConverter.html", output = [], lim=0, user=username)
 
 #flashcards
 @app.route("/flashcards", methods=["POST", "GET"])
 def flashcards():
   collection = db.profiles
   user_flashcards = collection.find_one({"username": request.cookies.get("username")})["flashcards"]
-  
+  username = request.cookies.get("username")
+
   if request.method == "POST":
     question = request.form["question"].lower().title()
     answer = model.ask_ai(question, "flashcard")
-    return render_template("flashcards.html", input = question, output=answer, flashcards = user_flashcards)
+    return render_template("flashcards.html", input = question, output=answer, flashcards = user_flashcards, user=username)
   else:
-    return render_template("flashcards.html", flashcards = user_flashcards)
+    return render_template("flashcards.html", flashcards = user_flashcards, user=username)
 
 @app.route("/save", methods=["POST", "GET"])
 def save_flashcards():
   collection = db.profiles
   query = {"username": request.cookies.get("username")}
   user_flashcards = collection.find_one(query)["flashcards"]
-  
+  username = request.cookies.get("username")
+
   if request.method == "POST":
     question = request.form["new_term"].lower().title()
     answer = request.form["new_ans"]
@@ -140,12 +115,12 @@ def save_flashcards():
         "content" : answer
       }]
     }
-    user_flashcards.append(new_flashcard)
+    user_flashcards = [new_flashcard] + user_flashcards
     collection.update_one({"username": request.cookies.get("username")},{"$set": {"flashcards": user_flashcards} })
 
-    return render_template("flashcards.html", flashcards = user_flashcards)
+    return render_template("flashcards.html", flashcards = user_flashcards, user=username)
   else:
-    return render_template("flashcards.html", flashcards = user_flashcards)
+    return render_template("flashcards.html", flashcards = user_flashcards, user=username)
   
 # @app.route("/user-flashcards")
 # def get_flashcards():
@@ -154,7 +129,6 @@ def save_flashcards():
 #   flashcards = collection.find_one({"username":username})["flashcards"]
 #   print(flashcards)
 #   return flashcards
-
 
 
 
@@ -173,7 +147,7 @@ def signup():
       return render_template("login.html", error = verification)
     
     if request.form['action'] == "Signup":
-      new_user = datatypes.gen_new_user(usr, pwd)
+      new_user = datatypes.gen_new_user(usr, datatypes.hash(pwd))
       if collection.find_one({"username":usr}) != None:
         return render_template("login.html", error = "Username already exists")
       collection.insert_one(new_user)
@@ -181,7 +155,7 @@ def signup():
       profile = collection.find_one({"username":usr})
       if profile == None:
         return render_template("login.html", error = "Username not found")
-      if profile["password"] != pwd:
+      if not datatypes.password_check(pwd, profile['password']):
         return render_template("login.html", error = "Incorrect password")
     #verify
     response = redirect("/home") #make_response()
@@ -195,6 +169,16 @@ def signup():
     response.set_cookie("password", max_age=0)
     return response #render_template("login.html")
 
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+
+@app.route('/shutdown', methods=['POST'])
+def shutdown():
+    shutdown_server()
+    return 'Server shutting down...'
 
 # # CLEAR OUT THE EVENTS
 # @app.route("/clear", methods=["POST"])
@@ -203,6 +187,8 @@ def signup():
 #   collection.delete_many({})
 #   return render_template("index.html")
 
+
+# db.profiles.delete_many({})
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=5000)

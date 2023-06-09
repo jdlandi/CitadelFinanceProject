@@ -13,7 +13,7 @@ import requests
 
 import openai
 openai.organization = "org-XBgyex0IxY9JO9E4jyMua7ZM"
-openai.api_key =  "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"
+openai.api_key =  "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"
 models = openai.Model.list()
 
 # def chatgpt(question):
@@ -39,7 +39,7 @@ def ask_ai(question:str, prompt:str):
                                                                                   {"role": "user","content": question }])
   return chat_completion.choices[0].message.content
 
-print(ask_ai("USD,EUR: 1.0024", "format_currencies"))
+# print(ask_ai("USD,EUR: 1.0024", "format_currencies"))
 
 
 def get_search(query:str, num: int):

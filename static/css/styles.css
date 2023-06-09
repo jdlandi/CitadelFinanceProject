@@ -50,7 +50,14 @@ body {
 }
 
 .logout {
-  margin-left: 650px;
+  margin-left: 50px;
+}
+
+.welcome {
+  margin-left: 450px;
+  white-space: nowrap;
+  margin-top: 0px;
+  margin-bottom: auto;
 }
 
 .news a {
@@ -122,6 +129,7 @@ nav li {
   background-color: #134A8C !important;
   font-family: 'ABeeZee', sans-serif;
   color: white !important;
+  white-space: nowrap;
 }
 
 li {
