@@ -37,12 +37,14 @@ class Stock(TypedDict):
   orig_price: float
   current_price: float
   price_difference: float
+  day_high: float
+  day_low: float
 
 class Portfolio(TypedDict):
   name: str
-  creation: date
+  creation: str
   private: bool
-  link: str
+  info: str
   stocks: list[Stock]
 
 class ExchangePair(TypedDict):
@@ -71,11 +73,30 @@ class User(TypedDict):
 def updated_stock_prices(orig: list[Stock]) -> list[Stock]:
   results: list[Stock] = orig
   for stock in results:
-    current_price = yf.Ticker(stock['ticker']).info['currentPrice']
+    info = yf.Ticker(stock['ticker']).info
+
+    current_price = info['currentPrice']
+    day_high = info['dayHigh']
+    day_low = info['dayLow']
     price_change = (current_price - stock['orig_price']) / stock['orig_price'] * 100.00
     stock["current_price"] = current_price
     stock["price_difference"] = price_change
+    stock["day_high"] = day_high
+    stock["day_low"] = day_low
   return results
+
+#print(yf.Ticker("NVDA").info)
+
+
+def gen_stock(name:str) -> Stock:
+  return {
+    "ticker" : name,
+    "orig_price" : 1,
+    "current_price" : 1,
+    "price_difference" : 1,
+    "day_high" : 1,
+    "day_low" : 1
+  }
 
 # print(updated_stock_prices([{
 #   "ticker" : "AAPL",
@@ -103,8 +124,8 @@ def get_conversion(rate1: str, rate2: str):
   return float(data['result'])
 
 
-def calculate_forex(data):
-  limit: int = 10
+def calculate_forex(data, limit):
+  limit: int = limit
   count: int = 0
   profits: list[ExchangePair] = []
 
@@ -122,24 +143,6 @@ def calculate_forex(data):
       "final_profit": final_profit
     })
     count += 1
-
-
-
-
-  # for currency_one in data:
-  #   for currency_two in data:
-  #     if count > limit:
-  #       continue
-  #     if currency_one == currency_two:
-  #       continue
-  #     conversion_rate: float = get_conversion(currency_one, currency_two)
-  #     final_profit = data[currency_one] * conversion_rate * ( 1 / data[currency_two])
-  #     profits.append({
-  #       "curr_one": currency_one,
-  #       "curr_two": currency_two,
-  #       "final_profit": final_profit
-  #     })
-  #     count += 1
   
   return profits
 
@@ -159,6 +162,7 @@ def input_verification(usr:str, pwd: str) -> str:
     return "Username must be at least 6 characters"
   if len(pwd) < 6:
     return "Password must be at least 6 characters"
+  return "OK"
 
 def gen_new_user(usr:str, pwd_hash:str) -> User:
   return {
@@ -168,15 +172,44 @@ def gen_new_user(usr:str, pwd_hash:str) -> User:
     "email": "",
     "location": "",
     "following": [],
-    "flashcards": [{"topic": "Forex", "conversation": [
+    "flashcards": [{"topic": "What Are Different Ways Of Trading", "conversation": [
       {
         "author": "assistant",
-        "content": "Forex is blah blag\h blah"
+        "content": "Some common ways of trading include day trading, swing trading, positional trading, and algorithmic trading."
       }
-    ]}],
+    ]}, {"topic": "Why Do People Short", "conversation": [
+      {
+        "author": "assistant",
+        "content": "To profit from a decline in the price of an asset, or to hedge against potential losses in a portfolio."
+      }
+    ]} , {"topic": "What Is Citadel", "conversation": [
+      {
+        "author": "assistant",
+        "content": "Citadel is a global investment firm that manages hedge funds, operates market-making initiatives, and provides other financial services."
+      }
+    ]}, {"topic": "Can You Explain Equity", "conversation": [
+      {
+        "author": "assistant",
+        "content": "Equity represents ownership in a company, typically in the form of stocks. Higher equity means higher ownership and potential profits."
+      }
+    ]}, {"topic": "What Is Forex", "conversation": [
+      {
+        "author": "assistant",
+        "content": "Forex refers to the market for trading currencies from around the world. It is short for 'foreign exchange'"
+      }
+    ]} , {"topic": "What Are Bollinger Bands", "conversation": [
+      {
+        "author": "assistant",
+        "content": "Bollinger Bands are a technical analysis tool used to measure volatility. They consist of a moving average and upper and lower bands."
+      }
+    ]}
+    ],
     "messages": [],
     "forexes": [],
-    "portfolios": []
+    "portfolios": [{"name": "AAPL", "creation": "04-01-2023", 
+                    "private": True, "info": "", "stocks":[{"ticker": "AAPL", 
+                                                            "orig_price": 100,"current_price": 23001, 
+                                                            "price_difference": 100, "day_high": 123212, "day_low": 1234}]}]
   }
 
 
@@ -235,7 +268,7 @@ example_user:User = {
       "name": "test portfolio",
       "creation": date(2023,4,1),
       "private": False,
-      "link": "sdf4624",
+      "info": "sdf4624",
       "stocks": [
         {
           "ticker": "AAPL",

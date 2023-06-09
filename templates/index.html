@@ -23,25 +23,27 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                <a class="nav-link btn" aria-current="page" href="/home">Home</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link btn" aria-current="page" href="/flashcards">Finance Dictionary</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link btn" aria-current="page" href="/currencyConverter">Forex Calculator</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link btn" aria-current="page" href="/portfolio">Stock Analyzer</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link btn" aria-current="page" href="/news">News</a>
               </li>
            
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Pricing
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Flights</a></li>
-                  <li><a class="dropdown-item" href="#">Hotels</a></li>
-                  <li><a class="dropdown-item" href="#">Car Rentals</a></li>
-                </ul>
-              </li>
 
-              <li class="nav-item">
-                <a class="nav-link" href="#">About Us</a>
-              </li>
-
-              <li class="nav-item">
+              <li class="nav-item logout">
                 <a class="nav-link btn" href="/signup">Logout</a>
               </li>
               
@@ -59,18 +61,19 @@
     <!-- Cards -->
     <div class = "container">
         <div class = "row">
-            <div class = "col-6">
+          <div class = "col-2"></div>
+            <div class = "col-4">
 
                 
                 <!-- https://getbootstrap.com/docs/5.3/components/card/ -->
                 <!-- Create a card container -->
                 <div class="card">
                     <!-- Add an image to the top of the card -->
-                    <img src="images/card-1.jpg" class="card-img-top" alt="Card Image" />
+                    <img src="/static/images/flashcards.png" class="card-img-top" alt="Card Image" />
                     <!-- Create a card body -->
                     <div class="card-body">
                     <!-- Add a title to the card -->
-                    <h5 class="card-title">Personalized Flashcards</h5>
+                    <h5 class="card-title">Personalized Finance Dictionary</h5>
                     <!-- Add a description to the card -->
                     <p class="card-text">Go over financial jargon and ask questions to our AI system.</p>
                     <!-- Add a button to the card -->
@@ -79,20 +82,20 @@
                 </div>
             </div>
 
-            <div class = "col-6">
+            <div class = "col-4">
 
                 
                 <!-- https://getbootstrap.com/docs/5.3/components/card/ -->
                 <!-- Create a card container -->
                 <div class="card">
                     <!-- Add an image to the top of the card -->
-                    <img src="images/card-2.jpg" class="card-img-top" alt="Card Image" />
+                    <img src="/static/images/forex.webp" class="card-img-top" alt="Card Image" />
                     <!-- Create a card body -->
                     <div class="card-body">
                     <!-- Add a title to the card -->
                     <h5 class="card-title">Currency Forex Calculator</h5>
                     <!-- Add a description to the card -->
-                    <p class="card-text">Find hotels in Nha Trang and rent cars to get around.</p>
+                    <p class="card-text">See which foreign currency exchanges can help you make profit.</p>
                     <!-- Add a button to the card -->
                     <a href="/currencyConverter" class="btn btn-primary">Go to Page</a>
                     </div>
@@ -102,34 +105,35 @@
         </div>
 
         <div class = "row">
-            <div class = "col-6">
+          <div class = "col-2"></div>
+            <div class = "col-4">
 
                 
                 <!-- https://getbootstrap.com/docs/5.3/components/card/ -->
                 <!-- Create a card container -->
                 <div class="card">
                     <!-- Add an image to the top of the card -->
-                    <img src="images/card-1.jpg" class="card-img-top" alt="Card Image" />
+                    <img src="/static/images/portfolio.jpeg" class="card-img-top" alt="Card Image" />
                     <!-- Create a card body -->
                     <div class="card-body">
                     <!-- Add a title to the card -->
-                    <h5 class="card-title">Portfolio Checker</h5>
+                    <h5 class="card-title">Stock Analyzer</h5>
                     <!-- Add a description to the card -->
                     <p class="card-text">Check in on how your portfolio is doing!</p>
                     <!-- Add a button to the card -->
-                    <a href="#" class="btn btn-primary">Go to Page</a>
+                    <a href="/portfolio" class="btn btn-primary">Go to Page</a>
                     </div>
                 </div>
             </div>
 
-            <div class = "col-6">
+            <div class = "col-4">
 
                 
                 <!-- https://getbootstrap.com/docs/5.3/components/card/ -->
                 <!-- Create a card container -->
                 <div class="card">
                     <!-- Add an image to the top of the card -->
-                    <img src="images/card-2.jpg" class="card-img-top" alt="Card Image" />
+                    <img src="/static/images/news.jpeg" class="card-img-top" alt="Card Image" />
                     <!-- Create a card body -->
                     <div class="card-body">
                     <!-- Add a title to the card -->

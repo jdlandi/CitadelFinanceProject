@@ -12,16 +12,19 @@
     <div class="container">
       <div class="row d-flex justify-content-center mt-5">
         <!-- Form -->
-        <div class="col-lg-6 col-md-8 col-sm-12 rounded text-center shadow p-5">
-          <h1>Login/Signup</h1>
-          <h3> {{ error }}</h3>
+        <div style = "background-color: #FFF3D6" class = "col-lg-6 col-md-8 col-sm-12 rounded text-center shadow p-5">
+          
+            <img src="/static/images/logo.png" alt="Logo" width="150" class="d-inline-block">
+          <p></p>
+          <h1 style = "color: #14213D">Login/Signup</h1>
+          <p> {{ error }}</p>
           <form method="post" action="/signup">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="floatingInput" name="username">
               <label for="floatingInput">Username</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" name="password">
+                <input type="password" class="form-control" id="floatingInput" name="password">
                 <label for="floatingInput">Password</label>
             </div>
             <!-- <button type="submit" class="btn btn-primary">Signup</button> -->

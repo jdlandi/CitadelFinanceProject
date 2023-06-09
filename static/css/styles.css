@@ -8,7 +8,17 @@
 #FCA311 (yellow);
 #E5E5E5 (light gray);
 #FFFFFF (white);
+
+
+
+#DEF1F7 light blue for cards
+#002349 (dark blue) for nav bar
+#FFF3D6 (beige) for background
+
 */
+
+
+
 /* .colStyle {
   
 } */
@@ -21,14 +31,32 @@
 
 /* This is a custom class to change the color of the NavBar...it overrides the Bootstrap built-in style */
 .navStyle {
-  background-color: #fff6ea;
+  background-color: #134A8C;
+  color: white !important; 
 }
 
 /* Background color for every page, default font for every page, default font color for every page */
 body {
-  background-color: #14213D !important;
+  background-color: #DEF1F7 !important;
   font-family: 'ABeeZee', sans-serif !important;
-  color: #E5E5E5 !important;
+  color: #14212D !important;
+}
+
+.block {
+
+  text-align: center;
+  margin: 20px;
+
+}
+
+.logout {
+  margin-left: 650px;
+}
+
+.news a {
+
+  text-align: left;
+  color: #14212D !important;
 }
 
 /* Custom font & font color for h1 elements, center alignment for text, text resize (and override of h1 default), top padding (for cushion away from NavBar) */
@@ -49,19 +77,24 @@ h6 {
 
 /* Text color for all links on page */
 a {
-  color: #14213D !important;
+  color: white !important;
 }
 
 /* Text color & text background color for all links on page, when hovering */
 .nav-item a:hover {
-  color: #9F5C59 !important;
-  background-color: #F4c88d !important;
+  color:  #14212D !important;
+  background-color: #DEF1F7 !important;
 }
 
 .searchStyle {
   border: 1px solid #9F5C59;
   color: #9F5C59 !important;
 
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
 }
 
 .searchStyle:hover{
@@ -78,19 +111,25 @@ a {
 
 /* Overrides built-in Bootstrap style for cards and list items (used in cards and NavBar) - background color, text color, font */
 .card {
-  background-color: #E5E5E5 !important;
+  background-color: #FFF3D6 !important;
   font-family: 'ABeeZee', sans-serif;
   color: #14213D !important;
   margin-bottom: 30px;
   margin-top: 30px;
 }
 
-li {
-  background-color: #fff6ea !important;
+nav li {
+  background-color: #134A8C !important;
   font-family: 'ABeeZee', sans-serif;
-  color: #14213D !important;
+  color: white !important;
 }
 
+li {
+
+  text-align: left;
+
+
+}
 /* Under construction pages - image responsiveness dependent on device/screen size */
 img {
     max-width: 100% ;
@@ -99,7 +138,7 @@ img {
 
 /* To customize the color of the button background and text on the form (suggestions page) */
 .btn-primary {
-  background-color: #FCA311 !important;
+  background-color: #DEF1F7 !important;
   color: #14213D !important;
 }
 
