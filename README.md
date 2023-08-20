@@ -19,6 +19,11 @@
 
 Citadel Finance is a cutting-edge web application designed to provide users with a comprehensive suite of financial tools and services. Whether you're a seasoned investor or just starting your financial journey, Citadel Finance offers a range of features to help you make informed decisions and stay ahead of the market.
 
+## Live Demo
+
+Experience the full functionality of Citadel Finance by visiting the live demo at [www.startcitadel.com](https://www.startcitadel.com). The live version showcases the project's features, including AI-powered flashcards, portfolio management, news summarization, forex trading insights, and more. Explore the user-friendly interface, test the various tools, and discover how Citadel Finance can empower you with valuable financial insights and knowledge. The live demo offers a hands-on opportunity to experience the project's features and understand how they can benefit users. Whether you're a potential recruiter or simply curious about the project, the live demo provides an excellent way to explore Citadel Finance in action.
+
+
 ## Features
 
 1. **User Authentication**: Secure sign-up and login functionality with input verification and password hashing.
